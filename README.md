@@ -6,7 +6,7 @@ This is a simple interactive application where users can set the app mode and in
 
 Make sure you have Node.js and npm installed. Then, run the following command to install the necessary dependencies:
 
-``bash
+```bash
 npm install
 
 ## Usage
@@ -21,7 +21,7 @@ npm install
 
 To start the application, run:
 
-``bash
+```bash
 npm star
 
 
