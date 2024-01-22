@@ -26,4 +26,6 @@ To start the application, run:
 npm start
 ```
 
+[DEMO LINK](https://olhakoziuk.github.io/hover-game/)
+
 
