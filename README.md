@@ -8,6 +8,7 @@ Make sure you have Node.js and npm installed. Then, run the following command to
 
 ```bash
 npm install
+```
 
 ## Usage
 
@@ -22,6 +23,7 @@ npm install
 To start the application, run:
 
 ```bash
-npm star
+npm start
+```
 
 
