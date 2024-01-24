@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Mode } from "../../types/Mode";
+import { getGameModes } from "../../apiService";
 
 interface GameContextProps {
   gameModes: Mode[];
@@ -24,21 +25,18 @@ export const GameProvider: React.FC<Props> = ({ children }) => {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   const [selectedCells, setSelectedCells] = useState<string[]>([]);
 
-   useEffect(() => {
-     const fetchData = async () => {
-       try {
-         const response = await fetch(
-           "https://60816d9073292b0017cdd833.mockapi.io/modes"
-         );
-         const data = await response.json();
-         setGameModes(data);
-       } catch (error) {
-         console.error("Error fetching data:", error);
-       }
-     };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getGameModes();
+        setGameModes(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-     fetchData();
-   }, []); 
+    fetchData();
+  }, []);
 
   return (
     <GameContext.Provider

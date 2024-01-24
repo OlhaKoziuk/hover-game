@@ -3,6 +3,7 @@ import './App.css';
 import { GameField } from './components/GameField';
 import { HoverSquares } from './components/HoverSquares';
 
+
 function App() {
   return (
     <div className="appContainer">

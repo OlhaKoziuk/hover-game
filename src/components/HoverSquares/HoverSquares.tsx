@@ -4,6 +4,7 @@ import { useGameContext } from '../contexts/GameContext';
 
 export const HoverSquares: React.FC = () => {
   const { selectedCells } = useGameContext();
+  let keyCounter = 0;
 
   return (
     <section>
@@ -12,7 +13,7 @@ export const HoverSquares: React.FC = () => {
         <ListGroup>
           {selectedCells.map((item) => (
             <ListGroup.Item
-              key={Math.random()}
+              key={keyCounter++}
               className="text-warning-emphasis 
               bg-danger-subtle rounded mt-1 mb-1"
             >

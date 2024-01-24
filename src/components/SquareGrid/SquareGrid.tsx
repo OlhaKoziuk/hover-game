@@ -3,21 +3,31 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useGameContext } from "../contexts/GameContext";
 
 export const SquareGrid: React.FC = () => {
-  const [cellSize, setCellSize] = useState<number | undefined>(undefined);
+  const [cellSize, setCellSize] = useState<number>(0);
   const { gameModes, selectedMode, setSelectedCells } = useGameContext();
   const currentMode = gameModes.find((mode) => mode.id === selectedMode);
   const gridSize = currentMode?.field || 0;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleResize = () => {
-    const containerWidth = containerRef.current?.clientWidth;
-
-    if (containerWidth !== undefined) {
-      setCellSize(containerWidth / gridSize);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        containerRef.current.style.height = "85vh";
+        const containerHeight = containerRef.current.clientHeight;
+        const containerWidth = containerRef.current.clientWidth;
+
+        if (
+          containerHeight &&
+          containerWidth &&
+          containerHeight > containerWidth
+        ) {
+          setCellSize(containerWidth / gridSize);
+        } else if (containerHeight) {
+          setCellSize(containerHeight / gridSize);
+        }
+      }
+    };
+
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -25,11 +35,8 @@ export const SquareGrid: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gridSize]);
+  }, [gridSize, containerRef]);
   
- 
-
   const createSequence = (n: number) => {
     return Array.from(Array(n).keys()).map((index) => index + 1);
   };
@@ -52,17 +59,14 @@ export const SquareGrid: React.FC = () => {
   };
 
   return (
-    <Container
-      ref={containerRef}
-      className="w-100 mt-3 border border-secondary"
-    >
+    <Container ref={containerRef} className="mt-3">
       {amountOfCells.map((item) => (
-        <Row key={item} style={{ flexWrap: "nowrap" }}>
+        <Row key={item} className="flex-nowrap justify-content-center">
           {amountOfCells.map((element) => (
             <Col
               key={`${item}-${element}`}
               className="border border-secondary p-0"
-              style={{ width: cellSize, height: cellSize }}
+              style={{ maxWidth: cellSize, height: cellSize }}
               onMouseEnter={(event) =>
                 handleCellHover(
                   event as React.MouseEvent<HTMLDivElement>,
